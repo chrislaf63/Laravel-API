@@ -16,7 +16,7 @@ class ProductController extends Controller
 //        $categories = Categorie::select('categorie')->get();
         $products->load(['categories' => function ($query) {
             $query->select('categories.id', 'categories.categorie');
-    }]);
+        }]);
 
         return response()->json([
             'status' => true,
@@ -31,8 +31,8 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->price = $request->price;
         $product->stock = $request->stock;
-        if($request->hasFile('image')) {
-            $photoName = time().'.'.$request->image->extension();
+        if ($request->hasFile('image')) {
+            $photoName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('photos'), $photoName);
             $product->image = $photoName;
         }
@@ -40,12 +40,12 @@ class ProductController extends Controller
 //        dd($decode);
         $request->merge(['categorie' => $decode]);
         $categories = Categorie::select('id', 'categorie')->get();
-        foreach($categories as $category):
-            foreach($request->categorie as $cat){
-            if ($category->categorie == $cat):
-                $product->save();
-                $product->categories()->attach($category->id);
-            endif;
+        foreach ($categories as $category):
+            foreach ($request->categorie as $cat) {
+                if ($category->categorie == $cat):
+                    $product->save();
+                    $product->categories()->attach($category->id);
+                endif;
             }
         endforeach;
     }
@@ -53,14 +53,32 @@ class ProductController extends Controller
     public function update(Request $request, string $id)
     {
         $product = Product::find($id);
-        if($request->hasFile('image')) {
-            $photoName = time().'.'.$request->image->extension();
+        $array = [];
+    if (isset($request->categorie)) {
+        $decode = json_decode($request->categorie, true);
+        $request->merge(['categorie' => $decode]);
+        $categories = Categorie::select('id', 'categorie')->get();
+        foreach ($categories as $category):
+            foreach ($request->categorie as $cat) {
+                if ($category->categorie == $cat):
+                    array_push($array, $category->id);
+                endif;
+            }
+        endforeach;
+        $product->update($request->all());
+        $product->categories()->sync($array);
+    } else {
+        $product->update($request->all());
+    }
+        if ($request->hasFile('image')) {
+            $photoName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('photos'), $photoName);
             $product->image = $photoName;
-        }
-        $product->update($request->all());
-        $product->categories()->sync($request->categorie);
+        };
+        $product->update();
+
     }
+
 
     public function destroy(string $id)
     {
@@ -77,8 +95,8 @@ class ProductController extends Controller
             $query->select('categories.id', 'categories.categorie');
         }]);
         return response()->json([
-           'status' => true,
+            'status' => true,
             'product' => $product,
-            ]);
+        ]);
     }
 }
