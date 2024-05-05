@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Auth\Middleware\Authenticate;
-use \App\Http\Controllers\Categorycontroller;
+use \App\Http\Controllers\Api\Categorycontroller;
 
 
 Route::prefix('v1')->group(function () {

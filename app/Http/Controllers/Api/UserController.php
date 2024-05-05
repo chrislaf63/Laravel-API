@@ -8,10 +8,28 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Sanctum\HasApiTokens;
+use OpenApi\Annotations;
+
 
 class UserController extends Controller
 {
     use HasApiTokens;
+
+    /**
+     * @OA\Get(
+     *     path="/api/v1/users",
+     *     tags={"Users"},
+     *     summary="Get all users",
+     *
+     *     @OA\Response( response=200, description="Success"),
+     *     @OA\Response( response=401, description="Unauthorized"),
+     *     @OA\Response( response=403, description="Forbidden"),
+     *     @OA\Response( response=500, description="Internal Server Error"),
+     *     @OA\Response( response=404, description="Not Found"),
+     *     @OA\Response( response=422, description="Unprocessable Entity"),
+     *     )
+     */
+
 
     public function index()
     {
@@ -21,6 +39,20 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/v1/users/{id}",
+     *     tags={"Users"},
+     *     summary="Get one user",
+     *     @OA\Response( response=200, description="Success"),
+     *     @OA\Response( response=401, description="Unauthorized"),
+     *     @OA\Response( response=403, description="Forbidden"),
+     *     @OA\Response( response=500, description="Internal Server Error"),
+     *     @OA\Response( response=404, description="Not Found"),
+     *     @OA\Response( response=422, description="Unprocessable Entity"),
+     *     )
+     */
+
     public function show($id)
     {
         $user = User::find($id);
@@ -28,6 +60,25 @@ class UserController extends Controller
             $user
         ]);
     }
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/users",
+     *     tags={"Users"},
+     *     summary="Create a new user",
+     *     @OA\Parameter(name="name", in="query", required=true),
+     *     @OA\Parameter(name="email", in="query", required=true),
+     *     @OA\Parameter(name="password", in="query", required=true),
+     *     @OA\Parameter(name="password_confirmation", in="query", required=true),
+     *     @OA\Response( response=200, description="Success"),
+     *     @OA\Response( response=401, description="Unauthorized"),
+     *     @OA\Response( response=403, description="Forbidden"),
+     *     @OA\Response( response=500, description="Internal Server Error"),
+     *     @OA\Response( response=404, description="Not Found"),
+     *     @OA\Response( response=422, description="Unprocessable Entity"),
+     *     )
+     */
+
 
     public function store(Request $request)
     {
@@ -42,11 +93,44 @@ class UserController extends Controller
         $token = $user->createToken('authToken',['*']);
         return response()->json(['token' => $token->plainTextToken]);
     }
+
+    /**
+     * @OA\Put(
+     *     path="/api/v1/users/{id}",
+     *     tags={"Users"},
+     *     summary="Update a user",
+     *     @OA\Parameter(name="id", description="User id", in="path", required=true),
+     *     @OA\Parameter(name="name", in="query", required=true),
+     *     @OA\Parameter(name="email", in="query", required=true),
+     *     @OA\Parameter(name="password", in="query", required=true),
+     *     @OA\Parameter(name="password_confirmation", in="query", required=true),
+     *     @OA\Response( response=200, description="Success"),
+     *     @OA\Response( response=401, description="Unauthorized"),
+     *     @OA\Response( response=403, description="Forbidden"),
+     *     @OA\Response( response=500, description="Internal Server Error"),
+     *     @OA\Response( response=404, description="Not Found"),
+     *     @OA\Response( response=422, description="Unprocessable Entity"),
+     *     )
+     */
+
     public function update(Request $request, string $id)
     {
         $user = User::find($id);
         $user->update($request->all());
     }
+
+    /**
+     * @OA\delete(
+     *     path="/api/v1/users/{id}",
+     *     tags={"Users"},
+     *     summary="Delete a user",
+     *     @OA\Parameter(name="id", description="User id", in="path", required=true),
+     *     @OA\Response( response=200, description="Success"),
+     *     @OA\Response( response=401, description="Unauthorized"),
+     *     @OA\Response( response=403, description="Forbidden"),
+     *     @OA\Response( response=500, description="Internal Server Error"),
+     *     )
+     */
 
     public function destroy(string $id)
     {
@@ -54,6 +138,20 @@ class UserController extends Controller
         $user->delete();
         return response(null, 204);
     }
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/users/login",
+     *     tags={"Users"},
+     *     summary="Login a user",
+     *     @OA\Parameter(name="email", in="query", required=true),
+     *     @OA\Parameter(name="password", in="query", required=true),
+     *     @OA\Response( response=200, description="Success"),
+     *     @OA\Response( response=401, description="Unauthorized"),
+     *     @OA\Response( response=403, description="Forbidden"),
+     *     @OA\Response( response=500, description="Internal Server Error"),
+     *     )
+     */
 
     public function login(Request $request)
     {
