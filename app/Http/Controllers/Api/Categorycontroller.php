@@ -123,4 +123,28 @@ class Categorycontroller extends Controller
         $categorie->delete();
         return response(null, 204);
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/v1/category/{id}/products",
+     *     tags={"Categories"},
+     *     summary="Get products by category",
+     *     @OA\Parameter(name="id", in="path", required=true),
+     *     @OA\Response( response=200, description="Success"),
+     *     @OA\Response( response=401, description="Unauthorized"),
+     *     @OA\Response( response=403, description="Forbidden"),
+     *     @OA\Response( response=500, description="Internal Server Error"),
+     *     @OA\Response( response=404, description="Not Found"),
+     *     @OA\Response( response=422, description="Unprocessable Entity"),
+     *     )
+     */
+
+    public function productsByCategory(string $id)
+    {
+        $categorie = Categorie::find($id);
+        return response()->json([
+            'status' => true,
+            'products' => $categorie->products,
+        ]);
+    }
 }

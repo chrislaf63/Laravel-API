@@ -18,6 +18,10 @@ class Product extends Model
         'image',
     ];
 
+    protected $hidden = [
+        'pivot'
+    ];
+
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Categorie ::class);

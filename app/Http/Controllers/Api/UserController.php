@@ -17,10 +17,9 @@ class UserController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/users",
+     *     path="/api/v1/user",
      *     tags={"Users"},
      *     summary="Get all users",
-     *
      *     @OA\Response( response=200, description="Success"),
      *     @OA\Response( response=401, description="Unauthorized"),
      *     @OA\Response( response=403, description="Forbidden"),
@@ -41,9 +40,10 @@ class UserController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/users/{id}",
+     *     path="/api/v1/user/{id}",
      *     tags={"Users"},
      *     summary="Get one user",
+     *     @OA\Parameter(name="id", description="User id", in="path", required=true),
      *     @OA\Response( response=200, description="Success"),
      *     @OA\Response( response=401, description="Unauthorized"),
      *     @OA\Response( response=403, description="Forbidden"),
@@ -63,7 +63,7 @@ class UserController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/v1/users",
+     *     path="/api/v1/user",
      *     tags={"Users"},
      *     summary="Create a new user",
      *     @OA\Parameter(name="name", in="query", required=true),
@@ -96,7 +96,7 @@ class UserController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/v1/users/{id}",
+     *     path="/api/v1/user/{id}",
      *     tags={"Users"},
      *     summary="Update a user",
      *     @OA\Parameter(name="id", description="User id", in="path", required=true),
@@ -121,7 +121,7 @@ class UserController extends Controller
 
     /**
      * @OA\delete(
-     *     path="/api/v1/users/{id}",
+     *     path="/api/v1/user/{id}",
      *     tags={"Users"},
      *     summary="Delete a user",
      *     @OA\Parameter(name="id", description="User id", in="path", required=true),
@@ -141,7 +141,7 @@ class UserController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/v1/users/login",
+     *     path="/api/v1/user/login",
      *     tags={"Users"},
      *     summary="Login a user",
      *     @OA\Parameter(name="email", in="query", required=true),

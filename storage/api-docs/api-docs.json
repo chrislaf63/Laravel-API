@@ -175,6 +175,42 @@
                 }
             }
         },
+        "/api/v1/category/{id}/products": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get products by category",
+                "operationId": "47ecbde71cab43a77c558400eddbc83b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    }
+                }
+            }
+        },
         "/api/v1/products": {
             "get": {
                 "tags": [
@@ -388,13 +424,13 @@
                 }
             }
         },
-        "/api/v1/users": {
+        "/api/v1/user": {
             "get": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Get all users",
-                "operationId": "b343fe695d1beaa03b7deb8449dd1b7c",
+                "operationId": "069866150be4b975d248c35627c94fdb",
                 "responses": {
                     "200": {
                         "description": "Success"
@@ -421,7 +457,7 @@
                     "Users"
                 ],
                 "summary": "Create a new user",
-                "operationId": "71d86dd873f9e567415d5da5929a0dea",
+                "operationId": "14ffc1a2beec11e409c05b16801dd1c1",
                 "parameters": [
                     {
                         "name": "name",
@@ -466,13 +502,21 @@
                 }
             }
         },
-        "/api/v1/users/{id}": {
+        "/api/v1/user/{id}": {
             "get": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Get one user",
-                "operationId": "0197efcfd303b59ccdaad3e01097a0e0",
+                "operationId": "46a89c61ee453da0462c40d3531c722b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User id",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Success"
@@ -499,7 +543,7 @@
                     "Users"
                 ],
                 "summary": "Update a user",
-                "operationId": "e27513375b71e3b3dcc043da6f62129c",
+                "operationId": "020342b704ebc0573ecb111fe176cafc",
                 "parameters": [
                     {
                         "name": "id",
@@ -554,7 +598,7 @@
                     "Users"
                 ],
                 "summary": "Delete a user",
-                "operationId": "ae967f8cf847f7d2ad9eba19833f58cd",
+                "operationId": "0f3896a667cd077c45e22d0046c68479",
                 "parameters": [
                     {
                         "name": "id",
@@ -579,13 +623,13 @@
                 }
             }
         },
-        "/api/v1/users/login": {
+        "/api/v1/user/login": {
             "post": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Login a user",
-                "operationId": "78ea7469032e42a1dfc966cc0adca07b",
+                "operationId": "bffef4260a4d121b21a87bc257e22763",
                 "parameters": [
                     {
                         "name": "email",
