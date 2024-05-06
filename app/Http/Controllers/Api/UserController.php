@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Validator;
 use Laravel\Sanctum\HasApiTokens;
 use OpenApi\Annotations;
 
-
 class UserController extends Controller
 {
     use HasApiTokens;
@@ -28,7 +27,6 @@ class UserController extends Controller
      *     @OA\Response( response=422, description="Unprocessable Entity"),
      *     )
      */
-
 
     public function index()
     {

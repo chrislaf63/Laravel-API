@@ -21,6 +21,12 @@
                     <x-nav-link href="{{ route('products') }}" :active="request()->routeIs('products')">
                         {{ __('Accès gestion produits') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('category') }}" :active="request()->routeIs('category')">
+                        {{ __('Accès gestion catégories') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('users') }}" :active="request()->routeIs('users')">
+                        {{ __('Accès gestion utlisateurs') }}
+                    </x-nav-link>
                 </div>
             </div>
 

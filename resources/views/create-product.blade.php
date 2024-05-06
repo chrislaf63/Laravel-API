@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="font-sans antialiased min-h-screen bg-gray-50 text-black">
+    <div class="font-sans antialiased min-h-screen bg-gray-200 text-black">
         <div class="flex justify-center mb-10 pt-10">
             <form method="post" action="{{ route('product.store') }}" class="w-96" enctype="multipart/form-data">
                 @csrf
@@ -14,8 +14,9 @@
                                 @if (!empty($categories) && count($categories) > 0)
                                     @foreach ($categories as $category)
                                         <div class="ml-2">
-                                            <input type="checkbox" id="cat-{{ $category->id }}" name="categories[]" value="{{ $category->id }}"/>
+                                            <x-input type="checkbox" id="cat-{{ $category->id }}" name="categories[]" value="{{ $category->id }}"></x-input>
                                             <label for="cat-{{ $category->id }}">{{ $category->categorie }}</label>
+
                                         </div>
                                     @endforeach
                                 @endif
@@ -23,26 +24,26 @@
                         </fieldset>
                     </div>
                     <div class="mb-3 w-96">
-                        <label class="block mb-1.5" for="name">Nom du produit</label>
-                        <input class="text-black w-96" type="text" name="name" id="name">
+                        <x-label class="block mb-1.5" for="name">Nom du produit</x-label>
+                        <x-input class="text-black w-96" type="text" name="name" id="name"></x-input>
                     </div>
                     <div class="mb-3 w-96">
-                        <label class="block mb-1.5" for="description">Description</label>
-                        <input class="text-black w-96" type="text" name="description" id="description">
+                        <x-label class="block mb-1.5" for="description">Description</x-label>
+                        <x-input class="text-black w-96" type="text" name="description" id="description"></x-input>
                     </div>
                     <div class="mb-3 w-96">
-                        <label class="block mb-1.5" for="price">Prix</label>
-                        <input type="text" class="text-black w-96" name="price" id="price">
+                        <x-label class="block mb-1.5" for="price">Prix</x-label>
+                        <x-input type="text" class="text-black w-96" name="price" id="price"></x-input>
                     </div>
                     <div class="mb-3 w-96">
-                        <label class="block mb-1.5" for="stock">
-                            stock disponible
-                        </label>
-                        <input type="text" class="text-black w-96" name="stock" id="stock">
+                        <x-label class="block mb-1.5" for="stock">
+                            Stock disponible
+                        </x-label>
+                        <x-input type="text" class="text-black w-96" name="stock" id="stock"></x-input>
                     </div>
                     <div class="mb-3 w-96">
-                        <label class="block mb-1.5" for="image">Photo</label>
-                        <input type="file" name="image" id="image">
+                        <x-label class="block mb-1.5" for="image">Photo</x-label>
+                        <x-input type="file" name="image" id="image"></x-input>
                     </div>
                     <input
                         class="text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-base px-5 py-2 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 cursor-pointer dark:focus:ring-purple-900"

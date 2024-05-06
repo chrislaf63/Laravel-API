@@ -1,8 +1,16 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "My First API",
-        "version": "0.1"
+        "title": "Gestion de produits API",
+        "description": "Gestion de produits API",
+        "contact": {
+            "email": "test@example.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
     },
     "paths": {
         "/api/v1/category": {

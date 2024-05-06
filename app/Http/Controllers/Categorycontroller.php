@@ -14,11 +14,7 @@ class Categorycontroller extends Controller
     public function index()
     {
         $categories = Categorie::all();
-
-        return response()->json([
-            'status' => true,
-            'categories' => $categories,
-        ]);
+        return view('categories', compact('categories'));
     }
 
     /**
@@ -30,19 +26,14 @@ class Categorycontroller extends Controller
             'categorie' =>'required|max:255',
         ]);
         Categorie::create($request->all());
+        $categories = Categorie::all();
+        return view('categories', compact('categories'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(string $id)
     {
-        $categorie = Categorie::find($id);
-        return response()->json([
-            'status' => true,
-            'categories' => $categorie,
-        ]);
-
+        $category = Categorie::find($id);
+        return view('category-edit', compact('category'));
     }
 
     /**
@@ -50,8 +41,10 @@ class Categorycontroller extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $categorie = Categorie::find($id);
-        $categorie->update($request->all());
+        $category = Categorie::find($id);
+        $category->update($request->all());
+        $categories = Categorie::all();
+        return view('categories', compact('categories'));
     }
 
     /**
@@ -61,6 +54,7 @@ class Categorycontroller extends Controller
     {
         $categorie = Categorie::find($id);
         $categorie->delete();
-        return response(null, 204);
+        $categories = Categorie::all();
+        return view('categories' , compact('categories'));
     }
 }
