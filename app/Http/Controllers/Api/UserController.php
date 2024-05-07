@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Sanctum\HasApiTokens;
 use OpenApi\Annotations;
+use function Laravel\Prompts\password;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -153,30 +156,27 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' =>'required|email',
-            'password' => 'required'
+        Log::info('Request data:', $request->all());
+        $credentials = $request->validate( [
+            'email' => ['required', 'email'],
+            'password' => ['required']
             ]);
 
-        if($validator->fails()){
-            return response()->json([
-               'status' => false,
-               'message' => $validator->errors()
-            ]);
-        }
-
-        $validated = $validator->validated();
-        if(Auth::attempt($validated)){
-            if(auth('sanctum')->check()){
+        if(Auth::attempt($credentials)) {
+            if (auth('sanctum')->check()) {
                 auth()->user()->tokens()->delete();
             }
+            $user = User::where('email', $credentials['email'])->first();
+                $token = $user->createToken('authToken', ['*'])
+                    ->plainTextToken;
+                return response()->json(['message' => 'Log successfully',
+                    'token' => $token,
+                    'user' => $user
+                ]);
+            } else {
+                return response()->json(['message' => 'Invalid credentials'], 401);
+            }
         }
-        $user = User::where('email', $validated['email'])->first();
-        $token = $user->createToken('authToken',['*'])
-            ->plainTextToken;
-        return response()->json(['message' => 'Log successfully',
-            'token' => $token,
-            'user' => $user
-        ]);
-    }
+
+
 }

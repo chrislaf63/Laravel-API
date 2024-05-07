@@ -17,7 +17,6 @@
                     <li>D'ajouter, modifier ou supprimer un produit.</li>
                     <li>D'ajouter, modifier ou supprimer une catégorie de produits.</li>
                 </ul>
-
             </div>
         </div>
     </div>
